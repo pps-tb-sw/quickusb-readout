@@ -12,8 +12,10 @@
 #include <string>
 #include <cstring>
 #include <bitset>
+
 #include <stdlib.h>
 #include <stdio.h>
+#include <unistd.h> // sleep
 
 #include "QuickUSB.h"
 #include "APIUSB.h"
@@ -32,29 +34,85 @@ ConfigureQuickUSB(QHANDLE device)
   // SETTING_WORDWIDE   
   QuickUsbWriteSetting(device, 1, 0); // This sets it to 8 bits
   QuickUsbReadSetting(device, 1, &bitvalue);
-  std::cout <<"* NEW SETTING_WORDWIDE   = "<< std::bitset<8>(bitvalue) << std::endl;
+  std::cout <<"* (1)  SETTING_WORDWIDE       = "<< std::bitset<16>(bitvalue) << std::hex << " = 0x" << std::setw(4) << std::setfill('0') << bitvalue << std::endl;
   
-  // SETTING_DATAADDRESS 
+  // SETTING_DATAADDRESS
   // New Setting = 0000000111111111 = 0x01FF
   //QuickUsbWriteSetting(device, 2, 0x01FF);
-  //QuickUsbReadSetting(device, 2, &bitvalue);
-  //std::cout <<"* NEW SETTING_DATAADDRESS    = "<< std::bitset<16>(bitvalue) << std::endl;
+  QuickUsbReadSetting(device, 2, &bitvalue);
+  std::cout <<"* (2)  SETTING_DATAADDRESS    = "<< std::bitset<16>(bitvalue) << std::hex << " = 0x" << std::setw(4) << std::setfill('0') << bitvalue << std::endl;
   
   // SETTING_FIFO_CONFIG 
   //QuickUsbReadDefault(device, 3, &bitvalue);
-  //std::cout <<"  DEFAULT SETTING_FIFO_CONFIG    = "<< std::bitset<16>(bitvalue) << std::endl;
+  //std::cout <<"  DEFAULT SETTING_FIFO_CONFIG    = "<< std::bitset<16>(bitvalue) << std::hex << " = 0x" << std::setw(4) << std::setfill('0') << bitvalue << std::endl;
   // DEFAULT SETTING_FIFO_CONFIG    = 0000000000000010
   // New setting = 0000000011000010 = 0x82 
   QuickUsbWriteSetting(device, 3, 0x82 );
   QuickUsbReadSetting(device, 3, &bitvalue);
-  std::cout <<"* NEW SETTING_FIFO_CONFIG = "<< std::bitset<16>(bitvalue) << std::endl;
+  std::cout <<"* (3)  SETTING_FIFO_CONFIG    = "<< std::bitset<16>(bitvalue) << std::hex << " = 0x" << std::setw(4) << std::setfill('0') << bitvalue << std::endl;
+
+  // SETTING_FPGATYPE
+  QuickUsbReadSetting(device, 4, &bitvalue);
+  std::cout <<"* (4)  SETTING_FPGA_TYPE      = "<< std::bitset<16>(bitvalue) << std::hex << " = 0x" << std::setw(4) << std::setfill('0') << bitvalue << std::endl;
   
   // SETTING_CPUCONFIG
   //QuickUsbReadDefault(device, 5, &bitvalue);
-  //std::cout <<"  DEFAULT SETTING_CPUCONFIG      = "<< std::bitset<16>(bitvalue) << std::endl; 
+  //std::cout <<"  DEFAULT SETTING_CPUCONFIG      = "<< std::bitset<16>(bitvalue) << std::hex << " = 0x" << std::setw(4) << std::setfill('0') << bitvalue << std::endl; 
   QuickUsbWriteSetting(device, 5, 0x8012);
   QuickUsbReadSetting(device, 5, &bitvalue);
-  std::cout <<"* NEW SETTING_CPUCONFIG  = "<< std::bitset<16>(bitvalue) << std::endl;
+  std::cout <<"* (5)  SETTING_CPUCONFIG      = "<< std::bitset<16>(bitvalue) << std::hex << " = 0x" << std::setw(4) << std::setfill('0') << bitvalue << std::endl;
+
+  // SETTING_FPGATYPE
+  QuickUsbReadSetting(device, 6, &bitvalue);
+  std::cout <<"* (6)  SETTING_SPICONFIG      = "<< std::bitset<16>(bitvalue) << std::hex << " = 0x" << std::setw(4) << std::setfill('0') << bitvalue << std::endl;
+
+  // SETTING_SLAVEFIFOFLAGS
+  QuickUsbReadSetting(device, 7, &bitvalue);
+  std::cout <<"* (7)  SETTING_SLAVEFIFOFLAGS = "<< std::bitset<16>(bitvalue) << std::hex << " = 0x" << std::setw(4) << std::setfill('0') << bitvalue << std::endl;
+
+  // SETTING_I2CTL
+  QuickUsbReadSetting(device, 8, &bitvalue);
+  std::cout <<"* (8)  SETTING_I2CTL          = "<< std::bitset<16>(bitvalue) << std::hex << " = 0x" << std::setw(4) << std::setfill('0') << bitvalue << std::endl;
+
+  // SETTING_PORTA
+  QuickUsbReadSetting(device, 9, &bitvalue);
+  std::cout <<"* (9)  SETTING_PORTA          = "<< std::bitset<16>(bitvalue) << std::hex << " = 0x" << std::setw(4) << std::setfill('0') << bitvalue << std::endl;
+
+  // SETTING_PORTB
+  QuickUsbReadSetting(device, 10, &bitvalue);
+  std::cout <<"* (10) SETTING_PORTB          = "<< std::bitset<16>(bitvalue) << std::hex << " = 0x" << std::setw(4) << std::setfill('0') << bitvalue << std::endl;
+
+  // SETTING_PORTC
+  QuickUsbReadSetting(device, 11, &bitvalue);
+  std::cout <<"* (11) SETTING_PORTC          = "<< std::bitset<16>(bitvalue) << std::hex << " = 0x" << std::setw(4) << std::setfill('0') << bitvalue << std::endl;
+
+  // SETTING_PORTD
+  QuickUsbReadSetting(device, 12, &bitvalue);
+  std::cout <<"* (12) SETTING_PORTD          = "<< std::bitset<16>(bitvalue) << std::hex << " = 0x" << std::setw(4) << std::setfill('0') << bitvalue << std::endl;
+
+  // SETTING_PORTE
+  QuickUsbReadSetting(device, 13, &bitvalue);
+  std::cout <<"* (13) SETTING_PORTE          = "<< std::bitset<16>(bitvalue) << std::hex << " = 0x" << std::setw(4) << std::setfill('0') << bitvalue << std::endl;
+
+  // SETTING_PORTACCFG
+  QuickUsbReadSetting(device, 14, &bitvalue);
+  std::cout <<"* (14) SETTING_PORTACCFG      = "<< std::bitset<16>(bitvalue) << std::hex << " = 0x" << std::setw(4) << std::setfill('0') << bitvalue << std::endl;
+
+  // SETTING_PINFLAGS
+  QuickUsbReadSetting(device, 15, &bitvalue);
+  std::cout <<"* (15) SETTING_PINFLAGS       = "<< std::bitset<16>(bitvalue) << std::hex << " = 0x" << std::setw(4) << std::setfill('0') << bitvalue << std::endl;
+
+  // SETTING_VERSIONSPEED
+  QuickUsbReadSetting(device, 17, &bitvalue);
+  std::cout <<"* (17) SETTING_VERSIONSPEED   = "<< std::bitset<16>(bitvalue) << std::hex << " = 0x" << std::setw(4) << std::setfill('0') << bitvalue << std::endl;
+
+  // SETTING_TIMEOUT_HIGH
+  QuickUsbReadSetting(device, 18, &bitvalue);
+  std::cout <<"* (18) SETTING_TIMEOUT_HIGH   = "<< std::bitset<16>(bitvalue) << std::hex << " = 0x" << std::setw(4) << std::setfill('0') << bitvalue << std::endl;
+
+  // SETTING_TIMEOUT_LOW
+  QuickUsbReadSetting(device, 19, &bitvalue);
+  std::cout <<"* (19) SETTING_TIMEOUT_LOW    = "<< std::bitset<16>(bitvalue) << std::hex << " = 0x" << std::setw(4) << std::setfill('0') << bitvalue << std::endl;
 }	
 
 int
@@ -65,34 +123,36 @@ CheckReadback(QHANDLE device, unsigned short addr)
   /////////////////////////////////////////////
   
   unsigned short length = 2;
-  unsigned char* data = new unsigned char[length];
+  unsigned char* data = new unsigned char[length]();
+  if (!data) return -999;
+  const unsigned char correct_value = 0x80;
   
   int result = QuickUsbReadCommand(device, addr, data, &length);
-  if (!result) {
+  if (result==0) {
     std::cerr << "Cannot read register 0x" << std::hex << addr << " on board " << std::dec << device << std::endl;
-    return 1;
+    return -2;
   }
+  bool success = true;
   for (int i=0; i<length; i++) {
-    cout << "data " << i << " = 0x"<< hex << (int)data[i] << endl;
+    if (data[i]!=correct_value) { success = false; }
   }
-  
   delete [] data;
+
+  if (!success) return -1;
+  
   return 0;
 }
 
 struct Version {
   QWORD MajorVersion, MinorVersion, BuildVersion;
+  void Dump() const { std::cout << "Version = " << MajorVersion <<"."<< MinorVersion <<"." << BuildVersion << std::endl; }
 };
 
 Version
 GetFWVersion(QHANDLE device)
 {
-  // Get Firmware Version 
   QWORD major, minor, build;
   QuickUsbGetFirmwareVersion(device, &major, &minor, &build);
-  cout << "==============================" << endl;
-  cout << "=                            =" << endl;
-  cout << "= Firmware Version = " << major <<"."<< minor <<"." << build << "  =" << endl;
   
   Version out;
   out.MajorVersion = major;
@@ -104,10 +164,8 @@ GetFWVersion(QHANDLE device)
 Version
 GetDriverVersion(QHANDLE device)
 {
-  // Get Driver Version 
   QWORD major, minor, build;
   QuickUsbGetDriverVersion(&major, &minor, &build);
-  cout << "= Driver Version   = " << major <<"."<< minor <<"." << build << "  =" << endl;
   
   Version out;
   out.MajorVersion = major;
@@ -119,13 +177,8 @@ GetDriverVersion(QHANDLE device)
 Version
 GetDLLVersion(QHANDLE device)
 {
-  // Get dll version 
   QWORD major, minor, build;
   QuickUsbGetDllVersion(&major, &minor, &build);
-  cout << "= DLL Version      = " << major <<"."<< minor <<"." << build << "  =" << endl;
-  cout << "=                            =" << endl;
-  cout << "==============================" << endl;
-  cout << "" << endl;
   
   Version out;
   out.MajorVersion = major;
@@ -134,126 +187,174 @@ GetDLLVersion(QHANDLE device)
   return out;
 }
 
-void
-ReadIDCode(QHANDLE device)
+bool
+CheckIDCode(QHANDLE device)
 {
   /////////////////////////////////////////////
   // GET ID CODE
   /////////////////////////////////////////////
   
-  unsigned char *writedata = API::GetIDCode();
+  unsigned char *writedata = new unsigned char[1]();
+  API::GetIDCode(writedata);
   unsigned char readdata[4];
+  for (unsigned short i=0; i<4; i++) { readdata[i] = 0x0; }
   int result;
   
-  cout << "header of write data " << setbase(16) << (int)writedata[0]<< endl;
-
   result = QuickUsbWriteCommand(device, 0,  writedata, 1);
   
   unsigned short length = 4;
   result = QuickUsbReadCommand(device, 1, readdata, &length);
   
-  API::ReadGetIDCode(readdata);
+  return (API::ReadGetIDCode(readdata)==2221988558);
+}
+
+void
+WriteHPTDCSetup(QHANDLE device)
+{
+  /////////////////////////////////////////////
+  // SETTING UP FPGA/HPTDC
+  /////////////////////////////////////////////
+  const unsigned short size1=51, size2=31;
+  int result;
+  unsigned long errorCode;
+  
+  unsigned char* writeSetup = API::SetSetupReg();
+  
+  unsigned char* Setup2Write1 = new unsigned char[size1];
+  memcpy(Setup2Write1, writeSetup, size1);
+  
+  unsigned char* Setup2Write2 = new unsigned char[size2];
+  memcpy(Setup2Write2, writeSetup+size1, size2);
+  
+  for (int i=0; i < size1 ; i++){cout << std::dec << "Setup2Write1 [" << i <<"] = 0x" << std::hex << (unsigned short)Setup2Write1[i]<<" /// " << (unsigned short)writeSetup[i]<<endl;}
+  for (int i=0; i < size2 ; i++){cout << std::dec << "Setup2Write2 [" << i+size1 <<"] = 0x" << std::hex << (unsigned short)Setup2Write2[i]<<" /// " << (unsigned short)writeSetup[size1+i]<<endl;}
+  
+  result = QuickUsbWriteCommand(device, 0,  Setup2Write1, size1);
+  QuickUsbGetLastError(&errorCode);
+  cout << "result 1=" << errorCode << endl;
+  
+  usleep(5000);
+  
+  result = QuickUsbWriteCommand(device, size1,  Setup2Write2, size2);
+  QuickUsbGetLastError(&errorCode);
+  cout << "result 2=" << errorCode << endl;
+  
+  delete [] writeSetup;
+  delete [] Setup2Write1;
+  delete [] Setup2Write2;
+  
+  usleep(500);
+  
+} 
+  
+void
+ReadHPTDCSetup(QHANDLE device)
+{
+  /////////////////////////////////////////////
+  // READ BACK THE SETTINGS OF FPGA/HPTDC
+  /////////////////////////////////////////////
+  const unsigned short size1=50, size2=31;
+  int result;
+  unsigned long errorCode;
+  unsigned short length;
+  
+  unsigned char readsetup1[size1];
+  unsigned char readsetup2[size2];
+  unsigned char readsetup[size1+size2];
+  for (unsigned short i=0; i<size1+size2; i++) { readsetup[i] = 0x0; }
+  for (unsigned short i=0; i<size1; i++) { readsetup1[i] = 0x0; }
+  for (unsigned short i=0; i<size2; i++) { readsetup2[i] = 0x0; }
+  
+  unsigned char *writedata = API::GetSetupReg();
+  cout << "header of getting setup 0x" << std::hex << (int)writedata[0]<< endl;
+  result = QuickUsbWriteCommand(device, 0,  writedata, length=1);
+  QuickUsbGetLastError(&errorCode);
+  cout << "result 1=" << errorCode << endl;
+  
+  usleep(5000);
+  
+  // read back first part of the setup word
+  length = size1;
+  result = QuickUsbReadCommand(device, 1, readsetup1, &length);
+  QuickUsbGetLastError(&errorCode);
+  cout << "result 1=" << errorCode << endl;
+  
+  usleep(5000);
+  
+  // read back second part of the setup word
+  length = size2;
+  result = QuickUsbReadCommand(device, 1+size1, readsetup2, &length);
+  QuickUsbGetLastError(&errorCode);
+  cout << "result 2=" << errorCode << endl;
+  
+  for (unsigned short i=0; i<size1+size2; i++) {
+    if (i<size1) readsetup[i] = readsetup1[i];
+    else readsetup[i] = readsetup2[i-size1];
+    cout << "readsetup[" << std::dec << i << "] = 0x" << std::hex << (unsigned short)readsetup[i] << endl;
+  }
+  
+  API::ReadGetSetupReg(readsetup);
+  
+  delete [] writedata;
 }
 
 int main(int argc, char* argv[])
 {
-  char *namePtr;
   char nameList[120];
-  unsigned char data2read[20], data2write[20];
   unsigned short length, paraddress, bitvalue, value2write, addressvalue;
-  unsigned long count, len, errorCode, length2read = 2, length2write = 2;
+  unsigned long count, errorCode, length2read = 2, length2write = 2;
   int result, ReadResult, WriteResult, ReadSettings, WriteSettings;
   QHANDLE hDev;
   
   //  Find the QuickUSB modules in the system
-  len = 512;
-  result = QuickUsbFindModules(nameList, len);
-  
+  result = QuickUsbFindModules(nameList, 120);
+
   // Check for no modules and bail if we don't find any
-  if (*nameList == '\0') {
+  if (*nameList=='\0') {
     std::cerr << "Couldn't find any QuickUSB module on this computer!" << std::endl;
     return -1;
   }
   
   // Print out the name of each module found
-  namePtr = nameList;
-  while (*namePtr != '\0') {
+  char* namePtr = nameList;
+  while (*namePtr!='\0') {
     printf("Found %s\n", namePtr);
     namePtr = namePtr + strlen(namePtr) + 1;
   }
   
   // Open the first device
   result = QuickUsbOpen(&hDev, nameList);
-  if (!result) {
+  if (result==0) {
     printf("Cannot open %s\n", nameList);
     return 1;
   }
 	
-/*
-  GetFWVersion(hDev);
-  GetDriverVersion(hDev);
-  GetDLLVersion(hDev);
-*/
+  // Read all useful versions
+  std::cout << "[Firmware] ";
+  GetFWVersion(hDev).Dump();
+  
+  std::cout << "[Driver]   ";
+  GetDriverVersion(hDev).Dump();
+  
+  std::cout << "[DLL]      ";
+  GetDLLVersion(hDev).Dump();
 
   ConfigureQuickUSB(hDev);
   
-  CheckReadback(hDev, 0x70);
-  
-  ReadIDCode(hDev);
+  if (int rb_check=CheckReadback(hDev, 0x70)!=0) {
+    std::cerr << "The readback check failed with status " << rb_check << std::endl;
+  }
+
+  if (!CheckIDCode(hDev)) {
+    std::cerr << "The ID code was wrong!" << std::endl;
+  }
+
+  return 0;
   
 //#ifdef DEBUG
-  /////////////////////////////////////////////
-  // SETTING UP FPGA/HPTDC
-  /////////////////////////////////////////////
-  const unsigned short size1=51, size2=31;
-  unsigned char * writeSetup = API::SetSetupReg();
-  unsigned char * Setup2Write1=(unsigned char *)malloc(size1);
-  unsigned char * Setup2Write2=(unsigned char *)malloc(size2);
-  //for (int i=0; i < 51 ; i++){cout << "writeSetup [" << i <<"] = " << (unsigned int)writeSetup[i]<<endl;}
-  
-  //std::copy(writeSetup, writeSetup+51, Setup2Write);
-  //cout << sizeof(writeSetup) << " -- " << sizeof(unsigned char) << endl;
-  memcpy(Setup2Write1, writeSetup, size1);
-  memcpy(Setup2Write2, writeSetup+size1, size2);
-  for (int i=0; i < size1 ; i++){cout << std::dec << "Setup2Write1 [" << i <<"] = " << std::hex << (unsigned short)Setup2Write1[i]<<" /// " << (unsigned short)writeSetup[i]<<endl;}
-  for (int i=0; i < size2 ; i++){cout << std::dec << "Setup2Write2 [" << i+size1 <<"] = " << std::hex << (unsigned short)Setup2Write2[i]<<" /// " << (unsigned short)writeSetup[size1+i]<<endl;}
-  result = QuickUsbWriteCommand(hDev, 0,  Setup2Write1, size1);
-  QuickUsbGetLastError(&errorCode);
-  cout << "result 1=" << errorCode << endl;
-  result = QuickUsbWriteCommand(hDev, size1,  Setup2Write2, size2);
-  QuickUsbGetLastError(&errorCode);
-  cout << "result 2=" << errorCode << endl;
-  
-  /////////////////////////////////////////////
-  // READ BACK THE SETTINGS OF FPGA/HPTDC
-  /////////////////////////////////////////////
-  
-  unsigned char readsetup1[size1-1];
-  unsigned char readsetup2[size2];
-  unsigned char readsetup[size1-1+size2];
 
-  unsigned char *writedata = API::GetSetupReg();
-  cout << "header of getting setup " << setbase(16) << (int)writedata[0]<< endl;
-  length =1;
-  result = QuickUsbWriteCommand(hDev, 0,  writedata, length);
-  QuickUsbGetLastError(&errorCode);
-  cout << "result 1=" << errorCode << endl;
-  
-  length=size1-1;
-  result = QuickUsbReadCommand(hDev, 1, readsetup1, &length);
-  QuickUsbGetLastError(&errorCode);
-  cout << "result 1=" << errorCode << endl;
-  length=size2;
-  result = QuickUsbReadCommand(hDev, size1, readsetup2, &length);
-  QuickUsbGetLastError(&errorCode);
-  cout << "result 2=" << errorCode << endl;
-  for (int i=0; i < 81 ; i++){
-    if (i<size1-1) readsetup[i] = readsetup1[i];
-    else readsetup[i] = readsetup2[i-(size1-1)];
-    cout << "readsetup[" << std::dec << i << "] = " << hex <<(unsigned short)readsetup[i] << endl;
-  }
-  
-  API::ReadGetSetupReg(readsetup);
+  WriteHPTDCSetup(hDev);
+  ReadHPTDCSetup(hDev);
   /*		
 		unsigned char * writeControl;
 		writeControl=SetControlReg();
@@ -335,14 +436,12 @@ int main(int argc, char* argv[])
    //printf("ReadCommand address 0 = %04X\n");
 	
 */	
-	free(writeSetup);
 	
 //#endif
-	// Close the port when you're done with it
-	QuickUsbClose(hDev);
-
-	
-	return 0;
+  // Close the port when you're done with it
+  QuickUsbClose(hDev);
+  
+  return 0;
 }
 
 

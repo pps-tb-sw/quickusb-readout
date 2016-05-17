@@ -2,7 +2,7 @@ CPP  = g++
 CC   = gcc
 EXT_LIB = xpedaq/quickusb-2.15.2/
 API_OBJ = obj/APIUSB.o
-CXXINCS =  -Iinclude -I$(EXT_LIB)
+CXXINCS = -Iinclude -I$(EXT_LIB) -g
 BIN  = console.exe
 OBJ_DIR = obj/
 CXXFLAGS = $(CXXINCS)  
@@ -15,7 +15,7 @@ RM = rm -f
 all: console.exe
 
 clean:
-	${RM} $(BIN) *.o
+	${RM} $(BIN) $(OBJ_DIR)/*.o
 
 $(BIN): Console.cpp $(API_OBJ)
 	$(CPP) $^ -o $@ $(CXXINCS) $(LFLAGS)

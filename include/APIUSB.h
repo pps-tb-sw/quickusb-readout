@@ -8,7 +8,7 @@ namespace API
   unsigned char  *GetSetupReg    (void);
   unsigned char  * GetControlReg(void);
   unsigned char  *GetStatReg  (void);
-  unsigned char  *GetIDCode   (void);
+  void GetIDCode(unsigned char*);
   unsigned char  *GetICR      (void);
   
   unsigned char  *Start  (void);
@@ -17,7 +17,7 @@ namespace API
   
   void  ReadGetSetupReg    (unsigned char *);
   void  ReadGetControlReg(unsigned char *);
-  void  ReadGetIDCode(unsigned char *);
+  unsigned int ReadGetIDCode(unsigned char *);
   void  ReadGetStatReg  (unsigned char *);
   void ReadGetICR      (unsigned char *);
   //auxiliar
