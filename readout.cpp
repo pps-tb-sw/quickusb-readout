@@ -1,6 +1,4 @@
-#include "stdafx.h"
-#include "windows.h"
-#include "quickusb.h"
+#include "QuickUSB.h"
 #include <iostream>
 #include <fstream>
 #include "PlatformIndependentTimer.h"
@@ -128,7 +126,7 @@ int main(int argc, char* argv[])
 	
     // Stop the data aquisition, but do not stop the stream from the buffer to file
     cout << "Stop Data Aquisition!" << endl;
-    qResult = QuickUsbStopStream(hDevice, streamID, TRUE);
+    qResult = QuickUsbStopStream(hDevice, streamID, true);
     if (!qResult) {
         QuickUsbGetLastError(&qusbError);
         cout << "QuickUSB Error: " << qusbError << endl;
@@ -139,7 +137,7 @@ int main(int argc, char* argv[])
     cout << "Stop Data Streaming from buffer to file" << endl;
 	
 	// Stop the data stream, but block this time
-    qResult = QuickUsbStopStream(hDevice, streamID, FALSE);
+    qResult = QuickUsbStopStream(hDevice, streamID, false);
     if (!qResult) {
         QuickUsbGetLastError(&qusbError);
 

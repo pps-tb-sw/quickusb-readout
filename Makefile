@@ -1,31 +1,28 @@
-# Project: QuickUSB Console Demo
-# Makefile created by Dev-C++ 4.9.9.2
-
 CPP  = g++
 CC   = gcc
-LINKOBJ  = APIUSB.o
-LIBS =  libquickusb.a  
-INCS =  -I"C:/Dev-Cpp/include" 
-CXXINCS =  -I"C:/Dev-Cpp/lib/gcc/mingw32/3.4.2/include" -I"include" -I"C:/Dev-Cpp/include/c++/3.4.2/backward"  -I"C:/Dev-Cpp/include/c++/3.4.2/mingw32"  -I"C:/Dev-Cpp/include/c++/3.4.2"  -I"C:/Dev-Cpp/include" 
+EXT_LIB = xpedaq/quickusb-2.15.2/
+APIOBJ  = APIUSB.o
+CXXINCS =  -Iinclude -I$(EXT_LIB)
 BIN  = console.exe
+OBJ_DIR = obj/
 CXXFLAGS = $(CXXINCS)  
-CFLAGS = $(INCS) --add-stdcall-alias  
-LFLAGS := C:\Windows\System32\QuickUSB.dll -lws2_32
+CFLAGS = $(CXXINCS) 
+LFLAGS := -L$(EXT_LIB)/linux/lib/x86_64/ -lquickusb -Wl,-R$(EXT_LIB)/linux/lib/x86_64/
 RM = rm -f
 
-.PHONY: all all-before all-after clean clean-custom
+.PHONY: all clean
 
-all: all-before console.exe all-after
+all: console.exe
 
+clean:
+	${RM} $(LINKOBJ) $(BIN) *.o
 
-clean: clean-custom
-	${RM} $(LINKOBJ) $(BIN)
-
-$(BIN): Console.cpp $(LINKOBJ)
-	$(CPP) $^ -o "console.exe" $(LIBS) $(CXXINCS) $(LFLAGS)
+$(BIN): Console.cpp $(APIOBJ)
+	$(CPP) $^ -o "console.exe" $(CXXINCS) $(LFLAGS)
 
 readout.exe: readout.cpp PlatformIndependentTimer.o $(LINKOBJ)
-	$(CPP) $^ -o "readout.exe" $(LIBS) $(CXXINCS) $(LFLAGS)
+	$(CPP) $^ -o "readout.exe" $(CXXINCS) $(LFLAGS)
 
-#PlatformIndependentTimer.o: PlatformIndependentTimer.cpp
-#	$(CPP) -c PlatformIndependentTimer.cpp -o PlatformIndependentTimer.o $(CXXFLAGS)
+%.o: %.cpp %.h
+	@echo "Building $<..."
+	$(CPP) -c $(CXXFLAGS) $< -o $@

@@ -4,17 +4,14 @@
  Authors      : CT-PPS DAQ Team
 =============================================================================*/
 
-#include "stdafx.h"
-#include "windows.h"
 #include "QuickUSB.h"
 #include <iostream>
 #include <stdio.h>
 #include <bitset>
 #include <stdlib.h>
-#include <conio.h> #include <APIUSB.h>
-#include <cstdlib>
-#include <stdio.h>
+//#include <conio.h>
 #include <APIUSB.h>
+#include <stdio.h>
 #include <iostream>
 #include <sstream>
 #include <fstream>
@@ -69,7 +66,7 @@ int main(int argc, char* argv[])
 
 	// Open the first device
 	result = QuickUsbOpen(&hDev, nameList);
-	if (result == FALSE) {
+	if (!result) {
 		printf("Cannot open %s\n", nameList);
 		return 1;
 	}
@@ -134,7 +131,7 @@ int main(int argc, char* argv[])
 	unsigned char *data = new unsigned char [length]();
 	
 	result = QuickUsbReadCommand(hDev, 0X70, data, &length);
-	if (result == FALSE) {
+	if (!result) {
 		printf("Cannot read %s command register\n", nameList);
 		return 1;
 	}
