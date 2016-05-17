@@ -1,0 +1,25 @@
+setup_parity  1
+enable_ttl_hit  0
+enable_ttl_clock  0
+enable_ttl_reset  1
+enable_ttl_control  1
+enable_ttl_serial  1
+enable_pair  0
+enable_matching  1
+roll_over  4095
+pll_control  4
+dll_mode  2
+mode_rc  1
+mode_rc_compression  1
+enable_leading 1
+enable_trailing  1
+rc_adjust 1343
+coarse_count_offset 0
+trigger_count_offset 0
+enable_relative 1
+match_window 198
+search_window 198
+reject_count_offset 0
+TDC_ID  0
+
+

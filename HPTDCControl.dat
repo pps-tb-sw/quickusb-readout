@@ -1,0 +1,6 @@
+control_parity 1
+pll_reset 0
+dll_reset 1
+enable_channel 408098840 
+global_reset 1
+enable_pattern 15

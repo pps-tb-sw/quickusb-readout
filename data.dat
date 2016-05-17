@@ -1,0 +1,11 @@
+SetSetupReg    01010000
+GetSetupReg    01010001
+SetControlReg  01010010
+GetControlReg  01010011
+GetStatReg     01010100
+GetIDCode      01010101
+GetICR         01010110
+
+
+
+
