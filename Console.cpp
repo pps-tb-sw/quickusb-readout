@@ -4,41 +4,24 @@
  Authors      : CT-PPS DAQ Team
 =============================================================================*/
 
-#include "QuickUSB.h"
 #include <iostream>
-#include <stdio.h>
-#include <bitset>
-#include <stdlib.h>
-//#include <conio.h>
-#include <APIUSB.h>
-#include <stdio.h>
-#include <iostream>
+#include <iomanip> 
 #include <sstream>
 #include <fstream>
-#include <stdlib.h>		
-#include <iomanip> 
+#include <algorithm>
 #include <string>
 #include <cstring>
-#include <algorithm>
+#include <bitset>
+#include <stdlib.h>
+#include <stdio.h>
 
-
-
+#include "QuickUSB.h"
+#include "APIUSB.h"
 
 using namespace std;
 
 int main(int argc, char* argv[])
 {
-	cout << "****************"<< endl;
-	printf("QuickUSB CONTROL!\n");
-	cout << "" << endl;
-	cout << "run console.exe 0 to WRITE"<< endl;
-	cout << "run console.exe 1 to READ" << endl;
-	cout << "" <<endl;
-	cout << "****************"<< endl;
-	cout << "" << endl;
-	
-    
-	
 	char *namePtr;
 	char nameList[120];
 	unsigned char data2read[20], data2write[20];
@@ -53,6 +36,7 @@ int main(int argc, char* argv[])
 
 	// Check for no modules and bail if we don't find any
 	if (*nameList == '\0') {
+std::cout << "---> " << *nameList << std::endl;
 		printf("Couldn't find any modules\n");
       return 0;
 	}
@@ -70,7 +54,7 @@ int main(int argc, char* argv[])
 		printf("Cannot open %s\n", nameList);
 		return 1;
 	}
-
+//#ifdef DEBUG
 /*	// Get Firmware Version 
 	QWORD MajorFirmwareVersion, MinorFirmwareVersion, BuildFirmwareVersion;
 	QuickUsbGetFirmwareVersion(hDev, &MajorFirmwareVersion, &MinorFirmwareVersion, &BuildFirmwareVersion);
@@ -96,7 +80,7 @@ int main(int argc, char* argv[])
 	////////////////////////////////////////
 	// QUICK USB SETTINGS 
 	////////////////////////////////////////
-   
+  /* 
 	// SETTING_WORDWIDE   
 	QuickUsbWriteSetting(hDev, 1, 0); // This sets it to 8 bits
 	QuickUsbReadSetting(hDev, 1, &bitvalue);
@@ -123,11 +107,11 @@ int main(int argc, char* argv[])
 	QuickUsbWriteSetting(hDev, 5, 0X8012);
 	QuickUsbReadSetting(hDev, 5, &bitvalue);
 	std::cout <<"* NEW SETTING_CPUCONFIG  = "<< std::bitset<16>(bitvalue) << std::endl;
-	
+*/	
 	/////////////////////////////////////////////
 	// CHECKING READBACK VALUE FOR ADDRESS 0X70
 	/////////////////////////////////////////////
-	length = 2;
+/*	length = 2;
 	unsigned char *data = new unsigned char [length]();
 	
 	result = QuickUsbReadCommand(hDev, 0X70, data, &length);
@@ -138,10 +122,11 @@ int main(int argc, char* argv[])
 	printf("ReadCommand address 0 = %04X\n");
 	for (int i=0; i < length ; i++)
 	{cout << "data " << i << "  "<< hex << (int)data[i] << endl;}
-
+*/
 	/////////////////////////////////////////////
 	// GET ID CODE
 	/////////////////////////////////////////////
+//#endif
 
 	unsigned char *writedata=GetIDCode();
 	cout << "header of write data " << setbase(16) << (int)writedata[0]<< endl;
@@ -152,6 +137,7 @@ int main(int argc, char* argv[])
 	result = QuickUsbReadCommand(hDev, 1, readdata, &length);
 	ReadGetIDCode(readdata);
 
+#ifdef DEBUG
 	/////////////////////////////////////////////
 	// SETTING UP FPGA/HPTDC
 	/////////////////////////////////////////////
@@ -274,7 +260,7 @@ int main(int argc, char* argv[])
 		cout << " Read data[3] = " << data[3] << endl;
 		cout << "****************" << endl;
 	}
-
+*/
 /*
 //	QuickUsbGetLastError(&errorCode);
 //	std::cout << "Error Code  = " << errorCode << std::endl;
@@ -285,14 +271,13 @@ int main(int argc, char* argv[])
    //printf("ReadCommand address 0 = %04X\n");
 	
 */	
+	free(writeSetup);
 	
-
+#endif
 	// Close the port when you're done with it
 	QuickUsbClose(hDev);
 
-	free(writeSetup);
 	
-	printf("DONE");
 	return 0;
 }
 

@@ -1,7 +1,7 @@
 CPP  = g++
 CC   = gcc
 EXT_LIB = xpedaq/quickusb-2.15.2/
-APIOBJ  = APIUSB.o
+API_OBJ = obj/APIUSB.o
 CXXINCS =  -Iinclude -I$(EXT_LIB)
 BIN  = console.exe
 OBJ_DIR = obj/
@@ -15,14 +15,14 @@ RM = rm -f
 all: console.exe
 
 clean:
-	${RM} $(LINKOBJ) $(BIN) *.o
+	${RM} $(BIN) *.o
 
-$(BIN): Console.cpp $(APIOBJ)
-	$(CPP) $^ -o "console.exe" $(CXXINCS) $(LFLAGS)
+$(BIN): Console.cpp $(API_OBJ)
+	$(CPP) $^ -o $@ $(CXXINCS) $(LFLAGS)
 
-readout.exe: readout.cpp PlatformIndependentTimer.o $(LINKOBJ)
-	$(CPP) $^ -o "readout.exe" $(CXXINCS) $(LFLAGS)
+readout.exe: readout.cpp obj/PlatformIndependentTimer.o
+	$(CPP) $^ -o $@ $(CXXINCS) $(LFLAGS)
 
-%.o: %.cpp %.h
+$(OBJ_DIR)%.o: src/%.cpp include/%.h
 	@echo "Building $<..."
 	$(CPP) -c $(CXXFLAGS) $< -o $@

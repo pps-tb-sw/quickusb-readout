@@ -16,7 +16,8 @@
 using namespace std;
 
 //#define ABS_PATH "C:\\Users\\Lara\\Desktop\\DAQ\\SetSettings\\"
-#define ABS_PATH "C:\\QuickUSB-Marco-16May\\"
+//#define ABS_PATH "C:\\QuickUSB-Marco-16May\\"
+#define ABS_PATH "/home/forthomme/work/quickusb-readout/"
 
 
 //Setting control register
@@ -540,8 +541,12 @@ unsigned char *ret =new unsigned char [nwords];
 ret= input;
 
 
+for (unsigned short i=0; i<4; i++) {
+    std::cout << __PRETTY_FUNCTION__ << " input[" << std::dec << i << "] = " << std::hex << (unsigned short)ret[i] << " -- " << std::bitset<8>(ret[i]) << std::endl;
+}
 
-unsigned long id_code= ((ret[3] & 255) << 24) | ((ret[2] & 255) << 16) | ((ret[1] & 255) << 8)| ((ret[0] & 255) );
+
+unsigned int id_code= (((ret[3] & 0xFF) << 24) | ((ret[2] & 0xFF) << 16) | ((ret[1] & 0xFF) << 8)| ((ret[0] & 0xFF) )) & 0xFFFFFFFF;
 
 ofstream outFile("ReadGetIDCode.txt");
 

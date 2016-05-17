@@ -1,0 +1,1 @@
+xpedaq/quickusb-2.15.2/linux/setup.sh
