@@ -17,7 +17,7 @@ using namespace std;
 
 //#define ABS_PATH "C:\\Users\\Lara\\Desktop\\DAQ\\SetSettings\\"
 //#define ABS_PATH "C:\\QuickUSB-Marco-16May\\"
-#define ABS_PATH "/home/forthomme/work/quickusb-readout/"
+#define ABS_PATH "/home/forthomme/work/quickusb-readout/dat/"
 
 
 //Setting control register
