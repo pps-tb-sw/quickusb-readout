@@ -1,11 +1,10 @@
 # Project: QuickUSB Console Demo
 # Makefile created by Dev-C++ 4.9.9.2
 
-CPP  = g++.exe
-CC   = gcc.exe
-WINDRES = windres.exe
+CPP  = g++
+CC   = gcc
 LINKOBJ  = APIUSB.o
-LIBS =  -L"C:/Dev-Cpp/lib" -L"C:/Projects/Bitwise/QuickUSB/Library/Software/QuickUsbMingw" libquickusb.a  
+LIBS =  libquickusb.a  
 INCS =  -I"C:/Dev-Cpp/include" 
 CXXINCS =  -I"C:/Dev-Cpp/lib/gcc/mingw32/3.4.2/include" -I"include" -I"C:/Dev-Cpp/include/c++/3.4.2/backward"  -I"C:/Dev-Cpp/include/c++/3.4.2/mingw32"  -I"C:/Dev-Cpp/include/c++/3.4.2"  -I"C:/Dev-Cpp/include" 
 BIN  = console.exe
