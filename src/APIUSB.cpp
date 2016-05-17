@@ -19,6 +19,8 @@ using namespace std;
 //#define ABS_PATH "C:\\QuickUSB-Marco-16May\\"
 #define ABS_PATH "/home/forthomme/work/quickusb-readout/dat/"
 
+namespace API
+{
 
 //Setting control register
 unsigned char *SetControlReg (void)
@@ -1087,3 +1089,5 @@ GetSixteenBits (int parameter, const int nwords)
   return ret;
 
 }
+
+} // namespace API
